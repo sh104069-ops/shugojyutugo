@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FBF6EC">
+<title>しゅ語・じゅつ語をさがそう</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<button class="sound-btn" id="soundBtn" type="button" aria-label="おとの入り切り">🔊</button>
+
+<main>
+
+  <!-- ========== ホーム ========== -->
+  <section class="screen active" id="screen-home">
+    <h1 class="app-title">しゅ語・じゅつ語を さがそう</h1>
+    <p class="app-sub">さわって、ためして、文の しくみを みつけよう</p>
+
+    <div class="mode-grid">
+      <button class="mode-card" type="button" data-go="bone">
+        <span class="mode-icon" aria-hidden="true">🦴</span>
+        <span class="mode-body">
+          <span class="mode-step">ステップ１　たいけん</span>
+          <span class="mode-name">文の ほねを みつけよう</span>
+          <span class="mode-desc">ことばを とってみて、文が どうなるか ためそう</span>
+        </span>
+      </button>
+
+      <button class="mode-card" type="button" data-go="select">
+        <span class="mode-icon" aria-hidden="true">🔍</span>
+        <span class="mode-body">
+          <span class="mode-step">ステップ２　もんだい</span>
+          <span class="mode-name">しゅ語・じゅつ語を さがそう</span>
+          <span class="mode-desc">文を タップして、しゅ語と じゅつ語を みつけよう</span>
+        </span>
+      </button>
+
+      <button class="mode-card" type="button" data-go="build">
+        <span class="mode-icon" aria-hidden="true">🧩</span>
+        <span class="mode-body">
+          <span class="mode-step">ステップ３　つくろう</span>
+          <span class="mode-name">文を つくってみよう</span>
+          <span class="mode-desc">しゅ語と じゅつ語を えらんで、文を つくろう</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ========== ステップ１：たいけん（文のほね） ========== -->
+  <section class="screen" id="screen-bone">
+    <div class="topbar">
+      <button class="home-btn" type="button" data-go="home">← もどる</button>
+      <div class="progress-wrap"><div class="progress-bar" id="boneProgress"></div></div>
+      <div class="qcount" id="boneCount">1/5</div>
+    </div>
+
+    <div class="instruction mode-play" id="boneInstruction">
+      <div class="badge" id="boneBadge" aria-hidden="true">🦴</div>
+      <div class="instruction-text" id="boneInstructionText"></div>
+    </div>
+
+    <div class="sentence-card" id="boneCard"></div>
+
+    <div class="preview" id="bonePreview" aria-live="polite"></div>
+    <div class="msg info" id="boneMsg" aria-live="polite"></div>
+
+    <div class="actions">
+      <button class="btn ghost" type="button" id="boneReset">↺ もとに もどす</button>
+      <button class="btn ghost speak-btn" type="button" id="boneSpeak">🔈 よむ</button>
+    </div>
+    <div class="next-wrap">
+      <button class="next-btn" type="button" id="boneNext" hidden>つぎの 文へ →</button>
+    </div>
+  </section>
+
+  <!-- ========== ステップ２：レベル選択 ========== -->
+  <section class="screen" id="screen-select">
+    <div class="topbar">
+      <button class="home-btn" type="button" data-go="home">← もどる</button>
+    </div>
+    <h2 class="app-title">レベルを えらぼう</h2>
+    <p class="app-sub">文を タップして、しゅ語と じゅつ語を みつけよう</p>
+    <div class="level-grid" id="levelGrid"></div>
+  </section>
+
+  <!-- ========== ステップ２：クイズ ========== -->
+  <section class="screen" id="screen-quiz">
+    <div class="topbar">
+      <button class="home-btn" type="button" data-go="select">← もどる</button>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="qcount" id="qcount">1/8</div>
+    </div>
+
+    <div class="instruction mode-subject" id="instructionBox">
+      <div class="badge" id="instructionBadge" aria-hidden="true">①</div>
+      <div class="instruction-text" id="instructionText"></div>
+    </div>
+
+    <div class="sentence-card" id="sentenceCard"></div>
+
+    <div class="legend">
+      <span><i class="dot subject"></i>しゅ語（だれが・なにが）</span>
+      <span><i class="dot predicate"></i>じゅつ語（どうする・どんなだ）</span>
+    </div>
+
+    <div class="msg info" id="quizMsg" aria-live="polite" hidden></div>
+    <div class="bone-line" id="boneLine" hidden></div>
+
+    <div class="actions">
+      <button class="btn ghost" type="button" id="hintBtn">💡 ヒント</button>
+      <button class="btn ghost speak-btn" type="button" id="quizSpeak">🔈 よむ</button>
+    </div>
+    <div class="next-wrap">
+      <button class="next-btn" type="button" id="nextBtn" hidden>つぎの もんだいへ →</button>
+    </div>
+  </section>
+
+  <!-- ========== ステップ３：つくろう ========== -->
+  <section class="screen" id="screen-build">
+    <div class="topbar">
+      <button class="home-btn" type="button" data-go="home">← もどる</button>
+      <div class="found-count" id="foundCount">みつけた 文　0 / 0</div>
+    </div>
+
+    <div class="instruction mode-play">
+      <div class="badge" aria-hidden="true">🧩</div>
+      <div class="instruction-text">しゅ語と じゅつ語を 1つずつ えらぼう<small>ちゃんと 通じる 文を たくさん つくってみよう</small></div>
+    </div>
+
+    <div class="stage" id="stage" aria-live="polite">
+      <div class="slot slot-s" id="slotS">？</div>
+      <div class="slot slot-p" id="slotP">？</div>
+    </div>
+
+    <div class="msg info" id="buildMsg" aria-live="polite"></div>
+    <div class="sugg" id="buildSugg" hidden></div>
+
+    <div class="pick-title subject">しゅ語（だれが・なにが）</div>
+    <div class="chip-row" id="subjRow"></div>
+
+    <div class="pick-title predicate">じゅつ語（どうする・どんなだ）</div>
+    <div class="chip-row" id="predRow"></div>
+
+    <div class="actions">
+      <button class="btn ghost" type="button" id="buildRandom">🎲 おまかせ</button>
+      <button class="btn ghost speak-btn" type="button" id="buildSpeak">🔈 よむ</button>
+    </div>
+
+    <div class="pick-title collect">みつけた 文</div>
+    <div class="collection" id="collection"></div>
+  </section>
+
+  <!-- ========== けっか ========== -->
+  <section class="screen" id="screen-result">
+    <h2 class="app-title">けっか</h2>
+    <div class="result-card">
+      <div class="result-face" id="resultFace">🌸</div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-msg" id="resultMsg"></div>
+      <div class="result-actions">
+        <button class="btn primary" type="button" id="resultPrimary"></button>
+        <button class="btn ghost" type="button" id="resultSecondary"></button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
